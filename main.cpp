@@ -34,10 +34,6 @@ double f(double x, double y)
 
 double integrate(config conf){
     unsigned long sectors = (conf.x_end - conf.x_begin) / conf.step;
-    std::cout << sectors << std::endl;
-    std::cout << conf.x_end - conf.x_begin << std::endl;
-    std::cout << conf.step << std::endl;
-    std::cout << (conf.x_end - conf.x_begin) / conf.step<< std::endl;
     double xInterval = std::abs((conf.x_begin - conf.x_end)) / (double)sectors;
     double result = 0;
 
@@ -71,11 +67,6 @@ int main(int argc, char *argv[]) {
     }
     omp_set_num_threads((argc != 1) ? std::stoi(argv[6]) : omp_get_max_threads());
 
-    //int fd_out = open("out.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-    //dup2(fd_out, STDOUT_FILENO);
-    //close(fd_out);
-
-
     config conf;
 
     try{
@@ -96,6 +87,15 @@ int main(int argc, char *argv[]) {
     result = integrate(conf);
 
     auto end_time = get_current_time_fenced();
+
+    std::cout << "The result is: " << result << std::endl;
+    std::cout << "Time used: " << to_ms(end_time - start_time) << " milliseconds" << std::endl;
+    std::cout << "Threads used: " << omp_get_max_threads() << std::endl;
+
+    int fd_out = open("out.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+    dup2(fd_out, STDOUT_FILENO);
+    close(fd_out);
+
 
     std::cout << "The result is: " << result << std::endl;
     std::cout << "Time used: " << to_ms(end_time - start_time) << " milliseconds" << std::endl;

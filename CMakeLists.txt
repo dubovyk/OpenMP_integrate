@@ -3,6 +3,6 @@ project(lab1)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 set(SOURCE_FILES main.cpp inc/t_measure.h)
 add_executable(lab1 ${SOURCE_FILES})
